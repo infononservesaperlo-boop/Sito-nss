@@ -79,6 +79,8 @@ header.scrolled{background:rgba(20,17,28,0.92);backdrop-filter:blur(8px);padding
 .logo{display:flex;align-items:center;gap:8px;font-family:'Fraunces',serif;font-weight:600;font-size:15px;letter-spacing:0.5px;}
 .logo svg{width:26px;height:26px;flex-shrink:0;}
 nav ul{display:flex;gap:26px;list-style:none;}
+header nav ul{display:none;}
+header .nav-cta{display:none;}
 nav a{font-family:'Public Sans',sans-serif;font-size:13px;font-weight:500;letter-spacing:1px;text-transform:uppercase;position:relative;}
 nav a::after{content:'';position:absolute;left:0;bottom:-4px;width:0;height:1px;background:var(--gold);transition:width .25s;}
 nav a:hover::after{width:100%;}
@@ -132,11 +134,17 @@ nav a:hover::after{width:100%;}
 
 .rev{opacity:0;clip-path:inset(0 100% 0 0);transition:opacity .6s ease, clip-path .9s cubic-bezier(.16,1,.3,1);}
 .rev.vis{opacity:1;clip-path:inset(0 0 0 0);}
-.rev.fade{clip-path:none;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease;}
-.rev.fade.vis{transform:translateY(0);}
-.rev.pop{clip-path:none;transform:scale(.85) translateY(20px);}
-.rev.pop.vis{transform:scale(1) translateY(0);}
-.rev.slow.fade{transition:opacity 1.2s ease,transform 1.2s ease;}
+.rev.fade{clip-path:none;filter:blur(6px);transform:translateY(26px);transition:opacity .7s ease,transform .7s ease,filter .7s ease;}
+.rev.fade.vis{filter:blur(0);transform:translateY(0);}
+.rev.pop{clip-path:none;filter:blur(6px);transform:scale(.85) translateY(20px);transition:opacity .6s ease,transform .6s cubic-bezier(.34,1.56,.64,1),filter .6s ease;}
+.rev.pop.vis{filter:blur(0);transform:scale(1) translateY(0);}
+.rev.iris{position:relative;clip-path:none;opacity:0;transform:scale(.92);transition:opacity .9s ease,transform .9s cubic-bezier(.16,1,.3,1);}
+.rev.iris.vis{opacity:1;transform:scale(1);}
+.rev.iris::before{content:'';position:absolute;left:50%;top:0;width:160px;height:160px;background:radial-gradient(circle,var(--gold-glow) 0%,transparent 70%);transform:translate(-50%,-30%) scale(0);opacity:0;pointer-events:none;z-index:-1;transition:transform 1.2s cubic-bezier(.16,1,.3,1),opacity .9s ease;}
+.rev.iris.vis::before{transform:translate(-50%,-30%) scale(2.4);opacity:.8;}
+.rev.slow.fade{transition:opacity 1.2s ease,transform 1.2s ease,filter 1.2s ease;}
+.rev.slow.iris{transition:opacity 1.4s ease,transform 1.4s cubic-bezier(.16,1,.3,1);}
+.rev.slow.iris::before{transition:transform 1.7s cubic-bezier(.16,1,.3,1),opacity 1.3s ease;}
 
 .stats{padding:60px 0;position:relative;z-index:2;border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
 .stats-grid{display:grid;grid-template-columns:1fr;gap:24px;text-align:center;}
@@ -152,9 +160,16 @@ nav a:hover::after{width:100%;}
 .objects{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;perspective:800px;position:relative;}
 .spotlight{position:fixed;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,var(--gold-glow) 0%,transparent 70%);pointer-events:none;z-index:1;mix-blend-mode:screen;opacity:0;transition:opacity .4s;transform:translate(-50%,-50%);}
 .cellar:hover .spotlight{opacity:.5;}
-.object{aspect-ratio:1;border:1px solid var(--line);background:var(--panel);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;cursor:pointer;position:relative;z-index:2;transition:border-color .3s,background .3s,box-shadow .4s;padding:8px;text-align:center;transform:perspective(700px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));}
+.spotlight.pulse{animation:spotlightPulse .7s ease;}
+@keyframes spotlightPulse{0%{opacity:0;transform:translate(-50%,-50%) scale(.4);}30%{opacity:.85;}100%{opacity:0;transform:translate(-50%,-50%) scale(1.6);}}
+.object{aspect-ratio:1;border:1px solid var(--line);background:var(--panel);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;cursor:pointer;position:relative;z-index:2;transition:border-color .3s,background .3s,box-shadow .4s,transform .3s cubic-bezier(.22,1,.36,1);padding:8px;text-align:center;transform:perspective(700px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));}
+.object:active{transform:perspective(700px) scale(0.93) rotateX(10deg);border-color:var(--gold);}
 .object.open{border-color:var(--spark);background:var(--panel2);box-shadow:0 0 26px -4px var(--spark-glow);}
-.object.effect-flip.open{transform:perspective(700px) rotateY(180deg);}
+.object.open:active{transform:perspective(700px) scale(0.97);}
+.object.effect-flip.open{transform:perspective(700px) rotateY(180deg);box-shadow:0 14px 30px -10px rgba(0,0,0,.55);}
+.object.effect-flip.open:active{transform:perspective(700px) rotateY(180deg) scale(0.97);}
+.object.effect-flash.open{animation:ringPulse .6s ease;}
+@keyframes ringPulse{0%{box-shadow:0 0 0 0 var(--spark-glow);}70%{box-shadow:0 0 0 18px transparent;}100%{box-shadow:0 0 26px -4px var(--spark-glow);}}
 .object svg{width:28px;height:28px;stroke:var(--parchment-dim);fill:none;stroke-width:1.4;transition:stroke .3s,transform .4s,opacity .4s;}
 .object.open svg{stroke:var(--spark);}
 .object.effect-flash.open svg{animation:iconFlash .5s ease;}
@@ -167,13 +182,16 @@ nav a:hover::after{width:100%;}
 .reveal-inner p{font-family:'Fraunces',serif;font-style:italic;font-weight:500;font-size:15px;color:var(--parchment);line-height:1.6;}
 .reveal-inner.flip{transform-origin:top center;transform:rotateX(-90deg);opacity:0;transition:transform .55s cubic-bezier(.34,1.56,.64,1),opacity .3s;}
 .object-reveal.open .reveal-inner.flip{transform:rotateX(0);opacity:1;}
-.reveal-inner.dust{opacity:0;filter:blur(8px);transform:translateY(14px);transition:opacity .6s ease .15s,filter .6s ease .15s,transform .6s ease .15s;}
-.object-reveal.open .reveal-inner.dust{opacity:1;filter:blur(0);transform:translateY(0);}
+.reveal-inner.dust{opacity:0;filter:blur(8px);transform:translateY(14px) rotate(-1.5deg);transition:opacity .6s ease .15s,filter .6s ease .15s,transform .6s ease .15s;}
+.object-reveal.open .reveal-inner.dust{opacity:1;filter:blur(0);transform:translateY(0) rotate(0deg);}
 .reveal-inner.flash{opacity:0;border-left-color:var(--spark);transition:opacity .1s;}
 .object-reveal.open .reveal-inner.flash{opacity:1;animation:revealFlash .5s ease;}
 @keyframes revealFlash{0%{opacity:0;filter:brightness(2.4);}35%{opacity:1;filter:brightness(2.4);}100%{filter:brightness(1);}}
-.reveal-inner.mirror{clip-path:circle(0% at 50% 0%);border-left:none;border-right:2px solid var(--spark);padding-left:24px;transition:clip-path .7s cubic-bezier(.16,1,.3,1);}
+.reveal-inner.mirror{clip-path:circle(0% at 50% 0%);border-left:none;border-right:2px solid var(--spark);padding-left:24px;position:relative;overflow:hidden;transition:clip-path .7s cubic-bezier(.16,1,.3,1);}
 .object-reveal.open .reveal-inner.mirror{clip-path:circle(150% at 50% 0%);}
+.reveal-inner.mirror::after{content:'';position:absolute;inset:0;background:linear-gradient(115deg,transparent 35%,rgba(79,216,165,.35) 50%,transparent 65%);background-size:250% 100%;background-position:-120% 0;opacity:0;pointer-events:none;}
+.object-reveal.open .reveal-inner.mirror::after{animation:mirrorSweep .9s ease .15s 1;}
+@keyframes mirrorSweep{0%{opacity:1;background-position:-120% 0;}100%{opacity:0;background-position:120% 0;}}
 
 .features{padding:50px 0 60px;position:relative;z-index:2;}
 .feat-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:30px;}
@@ -353,7 +371,7 @@ footer .contact{color:var(--parchment-dim);font-size:13px;margin-bottom:20px;}
 <section class="synopsis" id="spettacolo">
   <div class="container">
     <p class="eyebrow rev fade slow">La storia</p>
-    <p class="lead rev fade slow">Un uomo eredita la casa del nonno appena scomparso. Nella vecchia cantina, tra oggetti dimenticati, cerca di capire che lavoro facesse davvero. Ogni oggetto apre un'ipotesi diversa — e ogni volta il palco si trasforma: luci, scenografia, musica dal vivo, magia.</p>
+    <p class="lead rev iris slow">Un uomo eredita la casa del nonno appena scomparso. Nella vecchia cantina, tra oggetti dimenticati, cerca di capire che lavoro facesse davvero. Ogni oggetto apre un'ipotesi diversa — e ogni volta il palco si trasforma: luci, scenografia, musica dal vivo, magia.</p>
 
     <div class="cellar rev fade">
       <div class="spotlight" id="spotlight"></div>
@@ -382,7 +400,7 @@ footer .contact{color:var(--parchment-dim);font-size:13px;margin-bottom:20px;}
 <section class="features">
   <div class="container">
     <p class="eyebrow rev fade">Cosa aspettarti</p>
-    <h2 class="rev fade" style="font-size:clamp(22px,6vw,38px);font-style:italic;font-weight:600;">Un'esperienza, non uno show</h2>
+    <h2 class="rev iris" style="font-size:clamp(22px,6vw,38px);font-style:italic;font-weight:600;">Un'esperienza, non uno show</h2>
     <div class="feat-grid">
       <div class="feat-card rev pop"><div class="num">01</div><h3>Magia scenica</h3><p>Non trucchi da salotto: la magia come linguaggio teatrale ed emotivo.</p></div>
       <div class="feat-card rev pop"><div class="num">02</div><h3>Musica dal vivo</h3><p>Ogni trasformazione ha una colonna sonora suonata in scena.</p></div>
@@ -433,7 +451,7 @@ footer .contact{color:var(--parchment-dim);font-size:13px;margin-bottom:20px;}
 <section class="schools">
   <div class="container">
     <p class="eyebrow rev fade slow">Per le scuole</p>
-    <h2 class="rev fade slow" style="font-size:clamp(22px,6vw,32px);font-style:italic;font-weight:600;">Uno spettacolo sulla crescita personale</h2>
+    <h2 class="rev iris slow" style="font-size:clamp(22px,6vw,32px);font-style:italic;font-weight:600;">Uno spettacolo sulla crescita personale</h2>
     <div class="schools-box rev fade slow">
       <p>Non Serve Saperlo racconta la ricerca di un'identità: capire chi era davvero il nonno significa, per il protagonista, capire che non serve un lavoro "socialmente accettabile" per avere valore. È una riflessione su come la società impone modelli, e su cosa significhi davvero scegliere chi essere — un tema che parla direttamente a studenti e ragazzi.</p>
       <p class="credit">Lo spettacolo è già stato portato in ambito scolastico, con una data alla scuola media Puecher.</p>
@@ -455,7 +473,7 @@ footer .contact{color:var(--parchment-dim);font-size:13px;margin-bottom:20px;}
 <section class="dates" id="date">
   <div class="container">
     <p class="eyebrow rev fade">Prossime date — Milano</p>
-    <h2 class="rev fade" style="font-size:clamp(22px,6vw,38px);margin-bottom:4px;font-style:italic;font-weight:600;">La programmazione</h2>
+    <h2 class="rev iris" style="font-size:clamp(22px,6vw,38px);margin-bottom:4px;font-style:italic;font-weight:600;">La programmazione</h2>
     <div class="countdown rev fade" id="countdown">
       <div><span class="n" id="cd-days">--</span><span class="l">Giorni</span></div>
       <div><span class="n" id="cd-hours">--</span><span class="l">Ore</span></div>
@@ -657,6 +675,9 @@ document.querySelectorAll('.object').forEach(obj => {
       const rect = obj.getBoundingClientRect();
       const cx = rect.left + rect.width/2;
       const cy = rect.top + rect.height/2;
+      spotlight.style.left = cx + 'px';
+      spotlight.style.top = cy + 'px';
+      spotlight.classList.remove('pulse'); void spotlight.offsetWidth; spotlight.classList.add('pulse');
       if(obj.classList.contains('effect-dust')) spawnDust(cx,cy,'');
       if(obj.classList.contains('effect-flash')) spawnDust(cx,cy,'spark');
     }
