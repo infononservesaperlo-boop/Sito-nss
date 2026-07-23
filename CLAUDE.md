@@ -42,6 +42,14 @@ https://youtu.be/svr7Gqn6ZEY (embed nell'hero)
 
 Riposizionato come spettacolo di crescita personale/identità — riferimento a data già fatta alla scuola media Puecher.
 
+## Foto
+
+Foto di scena reali in `images/` (ridimensionate/compresse per il web, ~1600px lato lungo):
+- `dal-palco-1.jpg`, `dal-palco-2.jpg`, `dal-palco-3.jpg` — usate nella sezione galleria "Dal palco"
+- `MAGO.jpg` — Leonardo Butera, usata nel cast
+- `MATTEO.jpg` — Matteo Casadei, usata nel cast
+- `COMPAGNIA.jpg` — foto di gruppo, usata nel cast per "La compagnia"
+
 ## Contatti reali
 
 infononservesaperlo@gmail.com — 331 924 1103 — Instagram/TikTok/Facebook @nonservesaperlo_official
@@ -50,8 +58,7 @@ infononservesaperlo@gmail.com — 331 924 1103 — Instagram/TikTok/Facebook @no
 
 - 5 link di prenotazione reali (uno per data, sostituiscono gli anchor `#PRENOTA-...` e gli `url` nel JSON-LD)
 - ID Google Analytics reale (sostituisce `G-XXXXXXXXXX`, 2 occorrenze nel `<head>`)
-- URL definitivo del sito e immagine di copertina per i tag Open Graph (`og:url`, `og:image`)
-- Foto di scena reali ritagliate/duotone per la sezione galleria (3 slot in `.gallery-grid`)
+- URL definitivo del sito e immagine di copertina per i tag Open Graph (`og:url`, `og:image` — ora che ci sono foto reali in `images/`, si può puntare `og:image` a una di quelle una volta scelto l'URL definitivo)
 - Meccanica definitiva di "regala un biglietto" e "porta un amico" (per ora CTA generiche via email)
 - Durata spettacolo, età consigliata, info parcheggio per la sezione FAQ
 - Meta Pixel (non incluso, da aggiungere solo se si fanno ads a pagamento)
