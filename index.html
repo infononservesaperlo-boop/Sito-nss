@@ -14,7 +14,7 @@
 <meta name="twitter:card" content="summary_large_image">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,500;1,9..144,600;1,9..144,700&family=Public+Sans:wght@400;500;600;700&family=Special+Elite&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,500;1,9..144,600;1,9..144,700&family=Cormorant+Garamond:ital,wght@1,500;1,600;1,700&family=Public+Sans:wght@400;500;600;700&family=Special+Elite&display=swap" rel="stylesheet">
 
 <script type="application/ld+json">
 {
@@ -84,7 +84,10 @@ nav a:hover::after{width:100%;}
 }
 .hero-content{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;}
 .hero-tag{font-family:'Special Elite',monospace;font-size:11px;letter-spacing:2.5px;color:var(--parchment-dim);text-transform:uppercase;margin-bottom:18px;opacity:0;animation:fadeUp .8s ease forwards .1s;text-shadow:0 2px 14px rgba(0,0,0,.6);}
-.hero h1{font-size:clamp(38px,9vw,88px);font-weight:600;font-style:italic;line-height:1.03;letter-spacing:0.2px;text-shadow:0 4px 30px rgba(0,0,0,.5);}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(44px,11vw,108px);font-weight:600;font-style:italic;line-height:1.05;letter-spacing:0.5px;text-shadow:0 4px 30px rgba(0,0,0,.5);}
+.hero-flourish{width:120px;height:28px;margin:0 auto 8px;opacity:0;animation:fadeUp .8s ease forwards .35s;}
+.hero-flourish svg{width:100%;height:100%;}
+.hero-flourish path{fill:none;stroke:var(--gold);stroke-width:1;opacity:0.75;}
 .hero h1 .word{display:inline-block;overflow:hidden;vertical-align:top;}
 .hero h1 .letter{display:inline-block;opacity:0;filter:blur(4px);transform:translateY(14px);animation:materialize .55s ease forwards;}
 @keyframes materialize{to{opacity:1;filter:blur(0);transform:translateY(0);}}
@@ -277,6 +280,7 @@ footer .contact{color:var(--parchment-dim);font-size:13px;margin-bottom:20px;}
   <div class="hero-content">
     <p class="hero-tag">Teatro contemporaneo — Milano</p>
     <h1 id="heroTitle"></h1>
+    <div class="hero-flourish"><svg viewBox="0 0 200 40" preserveAspectRatio="xMidYMid meet"><path d="M2 20c20 0 26-14 40-14s16 10 30 10 20-16 36-16 22 18 40 18 24-14 40-14 24 12 30 12"/></svg></div>
     <p>Uno spettacolo di magia, musica dal vivo e comicità. Scritto e diretto da Leonardo Butera — Leorobix.</p>
     <div class="scroll-cue"><div class="circle">↓</div><span>Scopri</span></div>
   </div>
