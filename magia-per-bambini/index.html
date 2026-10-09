@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Magia per Bambini – Leorobix Magic Show</title>
+<meta name="description" content="Sabato 7 novembre ore 17:00 al Teatro Corvetto di Milano: Leorobix Magic Show, un mondo di stupore e fantasia per tutti i bambini. Biglietti a soli 5€.">
+<meta property="og:title" content="Magia per Bambini – Leorobix Magic Show">
+<meta property="og:description" content="Sabato 7 novembre – ore 17:00 – Teatro Corvetto, Milano. Solo 5€!">
+<meta property="og:type" content="website">
+<!-- TODO: og:url e og:image quando c'è l'URL definitivo -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wdth,wght@75..125,400..700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --sky1:#2b5fd9;
+    --sky2:#5b3fc4;
+    --sky3:#8a5ad6;
+    --ink:#1e1450;
+    --purple:#4a2a9c;
+    --gold:#ffd23f;
+    --gold-d:#f5a300;
+    --red:#e23b3b;
+    --red-d:#b32525;
+    --white:#fff;
+    --radius:22px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;background:#5b3fc4}
+  body{
+    font-family:"Fredoka",system-ui,sans-serif;
+    color:var(--white);
+    background:linear-gradient(180deg,var(--sky1) 0%,var(--sky2) 55%,var(--sky3) 100%);
+    min-height:100vh;
+    overflow-x:hidden;
+    line-height:1.4;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit}
+
+  /* ---------- sfondo: stelline + nuvole ---------- */
+  .sparkles{position:fixed;inset:0;pointer-events:none;z-index:0}
+  .sparkles i{
+    position:absolute;width:var(--s);height:var(--s);
+    background:#fff;opacity:.85;
+    clip-path:polygon(50% 0,60% 40%,100% 50%,60% 60%,50% 100%,40% 60%,0 50%,40% 40%);
+    animation:twinkle var(--d) ease-in-out infinite;animation-delay:var(--l);
+  }
+  @keyframes twinkle{0%,100%{transform:scale(.5) rotate(0);opacity:.3}50%{transform:scale(1) rotate(20deg);opacity:1}}
+
+  .cloud{
+    position:absolute;left:0;right:0;height:120px;pointer-events:none;
+    background:
+      radial-gradient(60px 50px at 8% 100%,rgba(255,255,255,.28) 98%,transparent) ,
+      radial-gradient(90px 70px at 22% 100%,rgba(255,255,255,.22) 98%,transparent),
+      radial-gradient(70px 55px at 40% 100%,rgba(255,255,255,.28) 98%,transparent),
+      radial-gradient(100px 75px at 62% 100%,rgba(255,255,255,.22) 98%,transparent),
+      radial-gradient(70px 55px at 80% 100%,rgba(255,255,255,.28) 98%,transparent),
+      radial-gradient(80px 60px at 96% 100%,rgba(255,255,255,.22) 98%,transparent);
+  }
+
+  main{position:relative;z-index:1}
+  section{padding:56px 20px;max-width:960px;margin:0 auto;position:relative}
+
+  /* ---------- hero ---------- */
+  .hero{text-align:center;padding-top:36px;padding-bottom:30px}
+  h1{
+    font-weight:700;line-height:.95;letter-spacing:.5px;
+    font-size:clamp(46px,11vw,104px);
+    text-transform:uppercase;
+    color:#fff;
+    -webkit-text-stroke:0;
+    text-shadow:
+      0 4px 0 #b9a7ee,
+      0 8px 0 #6d3fcf,
+      0 12px 0 #3a1f86,
+      0 18px 24px rgba(20,8,70,.45);
+    transform:rotate(-1.5deg);
+  }
+  h1 small{
+    font-size:.55em;font-weight:600;display:inline-block;margin:0 .1em;
+    vertical-align:baseline;
+  }
+  .ribbon{
+    display:inline-block;position:relative;margin:34px auto 6px;
+    padding:12px 44px;
+    font-weight:600;font-size:clamp(17px,3.6vw,26px);
+    color:#fff;
+    background:linear-gradient(180deg,#ee4a4a,var(--red-d));
+    border-top:3px solid var(--gold);border-bottom:3px solid var(--gold);
+    box-shadow:0 8px 0 rgba(30,20,80,.25);
+  }
+  .ribbon::before,.ribbon::after{
+    content:"";position:absolute;top:8px;width:34px;height:100%;
+    background:var(--red-d);z-index:-1;
+  }
+  .ribbon::before{left:-22px;clip-path:polygon(0 0,100% 0,100% 100%,0 100%,25% 50%)}
+  .ribbon::after{right:-22px;clip-path:polygon(0 0,100% 0,75% 50%,100% 100%,0 100%)}
+
+  .stage{
+    position:relative;max-width:420px;margin:30px auto 0;
+  }
+  .stage svg{width:100%;height:auto;display:block;filter:drop-shadow(0 18px 18px rgba(20,8,70,.35))}
+  .float{animation:float 4s ease-in-out infinite}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+  .bunny{animation:peek 3.2s ease-in-out infinite;transform-origin:150px 190px}
+  @keyframes peek{0%,100%{transform:translateY(8px)}50%{transform:translateY(-6px)}}
+
+  .price-burst{
+    position:absolute;right:-6%;bottom:2%;width:128px;height:128px;
+    display:grid;place-items:center;text-align:center;
+    background:radial-gradient(circle at 35% 30%,#ff5a5a,var(--red-d));
+    clip-path:polygon(50% 0,60% 12%,75% 4%,78% 20%,95% 18%,88% 33%,100% 42%,88% 52%,98% 68%,82% 70%,82% 87%,66% 82%,58% 97%,50% 86%,42% 97%,34% 82%,18% 87%,18% 70%,2% 68%,12% 52%,0 42%,12% 33%,5% 18%,22% 20%,25% 4%,40% 12%);
+    transform:rotate(10deg);
+    animation:wobble 2.8s ease-in-out infinite;
+  }
+  .price-burst span{display:block;line-height:1;color:var(--gold);font-weight:700;text-shadow:0 3px 0 rgba(0,0,0,.25)}
+  .price-burst .solo{font-size:18px}
+  .price-burst .n{font-size:42px}
+  @keyframes wobble{0%,100%{transform:rotate(10deg) scale(1)}50%{transform:rotate(4deg) scale(1.07)}}
+
+  .date-pill{
+    display:inline-block;margin-top:30px;
+    padding:12px 30px;border-radius:12px;
+    background:linear-gradient(180deg,#ffe27a,var(--gold));
+    border:3px solid var(--gold-d);
+    color:var(--purple);font-weight:700;font-size:clamp(18px,4.4vw,30px);
+    box-shadow:0 7px 0 rgba(30,20,80,.3);
+  }
+
+  /* ---------- bottoni ---------- */
+  .btn{
+    display:inline-block;position:relative;
+    margin-top:26px;padding:18px 44px;border-radius:999px;
+    font-family:inherit;font-weight:700;font-size:clamp(20px,5vw,28px);
+    text-decoration:none;text-transform:uppercase;letter-spacing:.5px;
+    color:var(--ink);
+    background:linear-gradient(180deg,#ffe56e,var(--gold) 55%,#ffb921);
+    border:3px solid #fff3b0;
+    box-shadow:0 8px 0 var(--gold-d),0 16px 28px rgba(20,8,70,.4);
+    transition:transform .12s,box-shadow .12s;
+    animation:pulse 2.2s ease-in-out infinite;
+  }
+  .btn:hover{transform:translateY(-3px);box-shadow:0 11px 0 var(--gold-d),0 20px 30px rgba(20,8,70,.4)}
+  .btn:active{transform:translateY(6px);box-shadow:0 2px 0 var(--gold-d),0 6px 10px rgba(20,8,70,.4)}
+  .btn:focus-visible{outline:4px solid #fff;outline-offset:4px}
+  @keyframes pulse{0%,100%{filter:brightness(1)}50%{filter:brightness(1.1)}}
+  .btn-note{margin-top:14px;font-size:15px;opacity:.9}
+
+  /* ---------- countdown ---------- */
+  .countdown{
+    display:flex;justify-content:center;gap:12px;margin-top:34px;flex-wrap:wrap;
+  }
+  .countdown div{
+    min-width:74px;padding:10px 8px;border-radius:16px;
+    background:rgba(255,255,255,.16);border:2px solid rgba(255,255,255,.35);
+    backdrop-filter:blur(4px);
+  }
+  .countdown b{display:block;font-size:32px;line-height:1.1}
+  .countdown span{font-size:13px;text-transform:uppercase;letter-spacing:1px;opacity:.9}
+  .countdown-label{margin-top:34px;font-weight:500;opacity:.95}
+
+  /* ---------- sezioni ---------- */
+  h2{
+    text-align:center;font-size:clamp(30px,6.5vw,48px);line-height:1.05;
+    text-shadow:0 3px 0 rgba(30,20,80,.45);margin-bottom:34px;
+  }
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:20px}
+  .card{
+    background:#fff;color:var(--ink);border-radius:var(--radius);
+    padding:26px 22px;text-align:center;
+    box-shadow:0 8px 0 rgba(30,20,80,.28);
+    transition:transform .2s;
+  }
+  .card:nth-child(odd){transform:rotate(-1.2deg)}
+  .card:nth-child(even){transform:rotate(1.2deg)}
+  .card:hover{transform:rotate(0) translateY(-4px)}
+  .card .ico{
+    width:64px;height:64px;margin:0 auto 12px;border-radius:50%;
+    display:grid;place-items:center;font-size:32px;
+    background:linear-gradient(135deg,#ffe27a,var(--gold));
+  }
+  .card h3{font-size:22px;color:var(--purple);margin-bottom:4px}
+  .card p{font-size:17px;font-weight:500}
+
+  .banner{
+    position:relative;margin:0 auto;max-width:720px;text-align:center;
+    background:linear-gradient(180deg,#6a43c9,var(--purple));
+    border:3px solid rgba(255,255,255,.35);border-radius:28px;
+    padding:36px 24px 40px;
+    box-shadow:0 10px 0 rgba(30,20,80,.3);
+  }
+  .banner .show{
+    font-size:clamp(30px,7vw,54px);font-weight:700;color:var(--gold);
+    text-shadow:0 4px 0 rgba(0,0,0,.28);line-height:1.05;
+  }
+  .banner p{font-size:clamp(17px,3.6vw,21px);margin-top:10px}
+  .banner .addr{font-weight:600}
+  .banner .maps{
+    display:inline-block;margin-top:14px;padding:8px 18px;border-radius:999px;
+    border:2px solid rgba(255,255,255,.6);text-decoration:none;font-weight:600;font-size:16px;
+    transition:background .15s;
+  }
+  .banner .maps:hover{background:rgba(255,255,255,.18)}
+
+  .final{text-align:center;padding-bottom:70px}
+  .final .sub{font-size:19px;margin-top:-14px;margin-bottom:6px}
+
+  footer{
+    position:relative;z-index:1;text-align:center;padding:24px 20px 40px;
+    font-size:14px;opacity:.85;
+  }
+
+  /* ---------- reveal ---------- */
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .6s,transform .6s}
+  .reveal.in{opacity:1;transform:none}
+
+  @media (max-width:560px){
+    .price-burst{width:100px;height:100px;right:-2%}
+    .price-burst .solo{font-size:14px}.price-burst .n{font-size:32px}
+    .ribbon{padding:10px 26px}
+    section{padding:44px 18px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important}
+    .reveal{opacity:1;transform:none}
+  }
+</style>
+</head>
+<body>
+
+<div class="sparkles" aria-hidden="true" id="sparkles"></div>
+
+<main>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <h1>Magia <small>per</small><br>Bambini</h1>
+    <div class="ribbon">✨ Un mondo di stupore e fantasia! ✨</div>
+
+    <div class="stage">
+      <div class="float">
+        <svg viewBox="0 0 300 300" role="img" aria-label="Un cilindro magico da cui spunta un coniglietto">
+          <!-- bacchetta + scintille -->
+          <g>
+            <rect x="196" y="22" width="9" height="78" rx="4" transform="rotate(32 200 60)" fill="#2a1a60"/>
+            <rect x="196" y="22" width="9" height="16" rx="4" transform="rotate(32 200 60)" fill="#fff"/>
+          </g>
+          <g fill="#ffd23f">
+            <polygon points="228,30 233,44 247,49 233,54 228,68 223,54 209,49 223,44"/>
+            <polygon points="60,70 63,78 71,81 63,84 60,92 57,84 49,81 57,78"/>
+            <polygon points="262,120 265,128 273,131 265,134 262,142 259,134 251,131 259,128"/>
+            <polygon points="38,150 41,157 48,160 41,163 38,170 35,163 28,160 35,157"/>
+          </g>
+          <!-- interno cappello -->
+          <ellipse cx="150" cy="150" rx="96" ry="28" fill="#150d3d"/>
+          <!-- coniglio -->
+          <g class="bunny">
+            <ellipse cx="116" cy="62" rx="15" ry="44" transform="rotate(-8 116 62)" fill="#fff"/>
+            <ellipse cx="116" cy="66" rx="7" ry="32" transform="rotate(-8 116 66)" fill="#ffb3c7"/>
+            <ellipse cx="184" cy="62" rx="15" ry="44" transform="rotate(8 184 62)" fill="#fff"/>
+            <ellipse cx="184" cy="66" rx="7" ry="32" transform="rotate(8 184 66)" fill="#ffb3c7"/>
+            <circle cx="150" cy="128" r="46" fill="#fff"/>
+            <circle cx="132" cy="122" r="6" fill="#2a1a60"/>
+            <circle cx="168" cy="122" r="6" fill="#2a1a60"/>
+            <circle cx="134" cy="120" r="2" fill="#fff"/>
+            <circle cx="170" cy="120" r="2" fill="#fff"/>
+            <circle cx="118" cy="140" r="9" fill="#ffc0d0" opacity=".8"/>
+            <circle cx="182" cy="140" r="9" fill="#ffc0d0" opacity=".8"/>
+            <ellipse cx="150" cy="136" rx="6" ry="4.5" fill="#ff7fa3"/>
+            <path d="M150 140 v6 M150 146 q-6 6 -12 2 M150 146 q6 6 12 2" stroke="#2a1a60" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          </g>
+          <!-- corpo cappello (davanti) -->
+          <path d="M54 150 Q150 192 246 150 L260 246 Q150 282 40 246 Z" fill="#2a1a60"/>
+          <path d="M50 206 Q150 246 250 206 L254 232 Q150 270 46 232 Z" fill="#e23b3b"/>
+          <path d="M70 160 Q78 200 74 240" stroke="#fff" stroke-opacity=".18" stroke-width="8" fill="none" stroke-linecap="round"/>
+          <!-- tesa -->
+          <ellipse cx="150" cy="250" rx="124" ry="22" fill="#150d3d"/>
+          <!-- scintille uscenti -->
+          <g fill="#ffd23f">
+            <polygon points="96,172 99,180 107,183 99,186 96,194 93,186 85,183 93,180"/>
+            <polygon points="206,166 209,174 217,177 209,180 206,188 203,180 195,177 203,174"/>
+            <polygon points="150,176 152,182 158,184 152,186 150,192 148,186 142,184 148,182"/>
+          </g>
+        </svg>
+      </div>
+      <div class="price-burst" aria-label="Solo 5 euro"><div><span class="solo">SOLO</span><span class="n">5€</span></div></div>
+    </div>
+
+    <div class="date-pill">Sabato 7 Novembre – Ore 17.00</div><br>
+    <a class="btn buy" href="#PRENOTA-MAGIA">🎟️ Acquista ora</a>
+    <p class="btn-note">Biglietti online · solo 5€ a bambino</p>
+
+    <p class="countdown-label" id="cdLabel">Mancano solo…</p>
+    <div class="countdown" id="countdown" aria-live="off">
+      <div><b id="cdD">--</b><span>giorni</span></div>
+      <div><b id="cdH">--</b><span>ore</span></div>
+      <div><b id="cdM">--</b><span>minuti</span></div>
+      <div><b id="cdS">--</b><span>secondi</span></div>
+    </div>
+  </section>
+
+  <!-- ===== INFO ===== -->
+  <section class="reveal">
+    <h2>Tutto quello che c'è da sapere</h2>
+    <div class="cards">
+      <div class="card">
+        <div class="ico">📅</div>
+        <h3>Quando</h3>
+        <p>Sabato 7 Novembre<br>alle ore 17.00</p>
+      </div>
+      <div class="card">
+        <div class="ico">🎩</div>
+        <h3>Dove</h3>
+        <p>Teatro Corvetto<br>Viale Lucania 18, Milano</p>
+      </div>
+      <div class="card">
+        <div class="ico">⏰</div>
+        <h3>Durata</h3>
+        <p>1 ora di<br>pura magia</p>
+      </div>
+      <div class="card">
+        <div class="ico">⭐</div>
+        <h3>Prezzo</h3>
+        <p>Solo 5€<br>a biglietto</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== BANNER SHOW ===== -->
+  <section class="reveal">
+    <div class="banner">
+      <p>Un pomeriggio di stupore, risate e fantasia con</p>
+      <div class="show">Leorobix Magic Show</div>
+      <p class="addr">Teatro Corvetto · Viale Lucania 18, Milano</p>
+      <a class="maps" target="_blank" rel="noopener"
+         href="https://www.google.com/maps/search/?api=1&query=Teatro+Corvetto+Viale+Lucania+18+Milano">📍 Apri su Maps</a>
+    </div>
+  </section>
+
+  <!-- ===== CTA FINALE ===== -->
+  <section class="final reveal">
+    <h2>Pronti a lasciarvi stupire?</h2>
+    <p class="sub">Prenota il tuo posto: la magia ti aspetta!</p>
+    <a class="btn buy" href="#PRENOTA-MAGIA">🎟️ Acquista ora</a>
+    <p class="btn-note">Sabato 7 Novembre · ore 17.00 · Solo 5€</p>
+  </section>
+
+</main>
+
+<footer>© Leorobix Magic Show · Teatro Corvetto, Milano</footer>
+
+<script>
+  // Link di acquisto: sostituire con l'URL reale della biglietteria
+  var BUY_URL = "#PRENOTA-MAGIA";
+  document.querySelectorAll("a.buy").forEach(function(a){ a.href = BUY_URL; });
+
+  // Stelline di sfondo
+  (function(){
+    var box = document.getElementById("sparkles"), html = "";
+    for (var i = 0; i < 38; i++) {
+      var s = 8 + Math.random() * 18;
+      html += '<i style="left:' + (Math.random()*100).toFixed(1) + '%;top:' + (Math.random()*100).toFixed(1) +
+        '%;--s:' + s.toFixed(0) + 'px;--d:' + (2 + Math.random()*3).toFixed(1) + 's;--l:-' + (Math.random()*5).toFixed(1) + 's"></i>';
+    }
+    box.innerHTML = html;
+  })();
+
+  // Countdown (ora italiana, CET)
+  (function(){
+    var target = new Date("2026-11-07T17:00:00+01:00").getTime();
+    var d = document.getElementById("cdD"), h = document.getElementById("cdH"),
+        m = document.getElementById("cdM"), s = document.getElementById("cdS"),
+        label = document.getElementById("cdLabel"), box = document.getElementById("countdown");
+    function pad(n){ return n < 10 ? "0" + n : "" + n; }
+    function tick(){
+      var diff = target - Date.now();
+      if (diff <= 0) {
+        label.textContent = "Lo spettacolo è già andato in scena! Grazie a tutti 🎩✨";
+        box.style.display = "none";
+        return;
+      }
+      d.textContent = Math.floor(diff / 864e5);
+      h.textContent = pad(Math.floor(diff % 864e5 / 36e5));
+      m.textContent = pad(Math.floor(diff % 36e5 / 6e4));
+      s.textContent = pad(Math.floor(diff % 6e4 / 1e3));
+      setTimeout(tick, 1000);
+    }
+    tick();
+  })();
+
+  // Reveal allo scroll
+  (function(){
+    var els = document.querySelectorAll(".reveal");
+    if (!("IntersectionObserver" in window)) { els.forEach(function(e){ e.classList.add("in"); }); return; }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); } });
+    }, { threshold: .15 });
+    els.forEach(function(e){ io.observe(e); });
+  })();
+</script>
+</body>
+</html>
